@@ -1,0 +1,10 @@
+[package]
+name = "kelpie-core"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+directories = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+tracing-appender = { workspace = true }

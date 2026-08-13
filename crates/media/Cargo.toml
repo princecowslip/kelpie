@@ -1,0 +1,6 @@
+[package]
+name = "kelpie-media"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
