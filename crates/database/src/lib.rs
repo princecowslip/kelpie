@@ -1,19 +1,30 @@
 //! kelpie-database: SQLite persistence layer (kelpie.md §104 Database Domains,
-//! §106 Migration Policy). Placeholder crate — the domain schema and repositories
-//! land in Phase 2 (§136); Phase 1 (§135) only bootstraps the database file and
-//! proves the migration mechanism.
+//! §106 Migration Policy). The migration mechanism (numbered / immutable /
+//! transactional / tested, per §106) bootstraps the database file, and the
+//! Phase 2 (§136) domain schema and repositories build on top of it.
 //!
-//! The migration mechanism itself (numbered / immutable / transactional / tested,
-//! per §106) is real: [`bootstrap`] opens (creating if necessary) the SQLite
-//! database at the XDG data directory, enables WAL journaling, applies any
-//! outstanding migrations from [`MIGRATIONS`] each inside its own transaction,
-//! records each applied version in `schema_migrations`, and runs
-//! `PRAGMA integrity_check` before handing back the connection.
+//! [`bootstrap`] opens (creating if necessary) the SQLite database at the XDG
+//! data directory, enables WAL journaling, applies any outstanding migrations
+//! from [`MIGRATIONS`] each inside its own transaction, records each applied
+//! version in `schema_migrations`, and runs `PRAGMA integrity_check` before
+//! handing back the connection.
+//!
+//! Repository modules (one per Phase 2 domain group) each own their own table
+//! set from the `0002_core_data_layer` migration; this module and the
+//! migration files are frozen once Phase 2 repository work starts — new
+//! repository code lives in its own module file, not here.
 
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 
 use rusqlite::{params, Connection};
+
+pub mod activity;
+pub mod collections;
+pub mod creators_tags;
+pub mod follows;
+pub mod items;
+pub mod series;
 
 /// Errors that can occur while locating, opening, or migrating the database.
 #[derive(Debug, thiserror::Error)]
@@ -37,13 +48,19 @@ struct Migration {
     sql: &'static str,
 }
 
-/// All migrations, in ascending version order. Phase 1 (§135) ships only
-/// `0001_init.sql`, which creates the `schema_migrations` bookkeeping table
-/// itself; the full domain schema (§104) is Phase 2 (§136) work.
-const MIGRATIONS: &[Migration] = &[Migration {
-    version: 1,
-    sql: include_str!("../../../migrations/0001_init.sql"),
-}];
+/// All migrations, in ascending version order. `0001_init` (Phase 1, §135)
+/// creates the `schema_migrations` bookkeeping table itself; `0002_core_data_layer`
+/// (Phase 2, §136) adds the full domain schema (§104 Database Domains).
+const MIGRATIONS: &[Migration] = &[
+    Migration {
+        version: 1,
+        sql: include_str!("../../../migrations/0001_init.sql"),
+    },
+    Migration {
+        version: 2,
+        sql: include_str!("../../../migrations/0002_core_data_layer.sql"),
+    },
+];
 
 /// The on-disk path of the Kelpie SQLite database: `<XDG data dir>/kelpie.sqlite`
 /// (kelpie.md §121-122). Creates the containing directory if it does not exist.
@@ -139,6 +156,11 @@ mod tests {
         (dir, path)
     }
 
+    /// Number of migrations in [`MIGRATIONS`] — tests assert against this
+    /// rather than a hardcoded literal so adding a migration doesn't require
+    /// hunting down every count assertion.
+    const MIGRATION_COUNT: i64 = MIGRATIONS.len() as i64;
+
     #[test]
     fn bootstrap_creates_schema_migrations_table() {
         let (_dir, path) = temp_db_path("bootstrap.sqlite");
@@ -150,12 +172,12 @@ mod tests {
             })
             .expect("schema_migrations table should exist");
         assert_eq!(
-            count, 1,
-            "exactly one migration (0001_init) should be recorded"
+            count, MIGRATION_COUNT,
+            "every migration in MIGRATIONS should be recorded"
         );
 
         let applied = applied_migration_count(&conn).expect("count applied migrations");
-        assert_eq!(applied, 1);
+        assert_eq!(applied as i64, MIGRATION_COUNT);
     }
 
     #[test]
@@ -178,21 +200,27 @@ mod tests {
     fn reopening_is_idempotent() {
         let (_dir, path) = temp_db_path("idempotent.sqlite");
 
-        // First open applies the migration.
+        // First open applies every migration.
         {
             let conn = open_at(&path).expect("first bootstrap should succeed");
-            assert_eq!(applied_migration_count(&conn).unwrap(), 1);
+            assert_eq!(
+                applied_migration_count(&conn).unwrap() as i64,
+                MIGRATION_COUNT
+            );
         }
 
         // Reopening must not re-apply (and must not error on) an already-applied
-        // migration, and the row count must stay exactly one.
+        // migration, and the row count must stay the same.
         let conn = open_at(&path).expect("second bootstrap should succeed");
         let count: i64 = conn
             .query_row("SELECT COUNT(*) FROM schema_migrations", [], |row| {
                 row.get(0)
             })
             .unwrap();
-        assert_eq!(count, 1, "migration must not be applied twice");
+        assert_eq!(
+            count, MIGRATION_COUNT,
+            "migrations must not be applied twice"
+        );
     }
 
     #[test]
@@ -215,6 +243,42 @@ mod tests {
             .query_row("PRAGMA integrity_check", [], |row| row.get(0))
             .expect("run integrity_check");
         assert_eq!(result, "ok");
+    }
+
+    /// `0002_core_data_layer` should create every Phase 2 domain table (§104
+    /// Database Domains subset covered by §136).
+    #[test]
+    fn core_data_layer_migration_creates_all_domain_tables() {
+        let (_dir, path) = temp_db_path("core_data_layer.sqlite");
+        let conn = open_at(&path).expect("bootstrap should succeed");
+
+        const EXPECTED_TABLES: &[&str] = &[
+            "items",
+            "media_sources",
+            "creators",
+            "tags",
+            "item_tags",
+            "series",
+            "chapters",
+            "collections",
+            "collection_items",
+            "history",
+            "progress",
+            "follows",
+            "favorites",
+        ];
+
+        for table in EXPECTED_TABLES {
+            let exists: bool = conn
+                .query_row(
+                    "SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = ?1",
+                    params![table],
+                    |row| row.get::<_, i64>(0),
+                )
+                .unwrap()
+                > 0;
+            assert!(exists, "expected table `{table}` to exist after migrations");
+        }
     }
 
     #[test]
