@@ -23,7 +23,10 @@
   },
   "bundle": {
     "active": true,
-    "targets": "all",
+    "targets": ["deb", "appimage"],
+    "category": "Entertainment",
+    "shortDescription": "Kelpie is a lawful adult media aggregation desktop app",
+    "longDescription": "Kelpie is a lawful adult media aggregation desktop app. It indexes and browses content exposed by configured providers through a local desktop shell, without hosting or redistributing third-party media itself. Phase 1 ships the desktop shell with fake providers only; real provider integrations are added in later phases.",
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
