@@ -2,4 +2,5 @@
 //! Placeholder crate — most content lands in Phase 0/2. Currently provides XDG path
 //! resolution (§121-122), used by the SQLite bootstrap and logging setup in Phase 1.
 
+pub mod logging;
 pub mod paths;
