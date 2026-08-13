@@ -19,4 +19,7 @@ export interface MediaItem {
   kind: MediaKind;
   thumbnailUrl?: string;
   providerLabel: string;
+  /** Optional short synopsis (kelpie.md §16 `MediaItem.description`). Added by
+   * the fake provider feed unit; existing required fields are unchanged. */
+  description?: string;
 }
