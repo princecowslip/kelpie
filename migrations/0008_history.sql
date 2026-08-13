@@ -1,0 +1,7 @@
+-- Migration 0008: history
+--
+-- Reserved for the History Phase 2 (kelpie.md §136, §98 History) work unit:
+-- `history` table (kelpie.md §104 Database Domains: Library / user state). Every
+-- migration is numbered, immutable once merged, transactional, and tested (§106) —
+-- this placeholder is a valid empty batch until that unit fills it in as part of
+-- landing its own PR; it must never be renumbered or reused for another entity.

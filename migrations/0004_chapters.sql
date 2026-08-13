@@ -1,0 +1,8 @@
+-- Migration 0004: chapters
+--
+-- Reserved for the Chapter Phase 2 (kelpie.md §136, §20 Series Model, §22 Sequence
+-- Numbers) work unit: `chapters` and `pages` tables (kelpie.md §104 Database
+-- Domains: Series structure). Every migration is numbered, immutable once merged,
+-- transactional, and tested (§106) — this placeholder is a valid empty batch until
+-- that unit fills it in as part of landing its own PR; it must never be renumbered
+-- or reused for another entity.

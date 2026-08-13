@@ -1,0 +1,8 @@
+-- Migration 0002: items
+--
+-- Reserved for the MediaItem Phase 2 (kelpie.md §136, §16 Unified MediaItem) work
+-- unit: `items` and `media_sources` tables (kelpie.md §104 Database Domains: Media).
+-- Every migration is numbered, immutable once merged, transactional, and tested
+-- (§106) — this placeholder is a valid empty batch until that unit fills it in as
+-- part of landing its own PR; it must never be renumbered or reused for another
+-- entity.

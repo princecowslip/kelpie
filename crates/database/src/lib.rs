@@ -1,7 +1,7 @@
 //! kelpie-database: SQLite persistence layer (kelpie.md §104 Database Domains,
-//! §106 Migration Policy). Placeholder crate — the domain schema and repositories
-//! land in Phase 2 (§136); Phase 1 (§135) only bootstraps the database file and
-//! proves the migration mechanism.
+//! §106 Migration Policy). Phase 1 (§135) bootstrapped the database file and proved
+//! the migration mechanism; Phase 2 (§136) is landing the domain schema and
+//! repositories in [`repositories`] on top of it, entity by entity.
 //!
 //! The migration mechanism itself (numbered / immutable / transactional / tested,
 //! per §106) is real: [`bootstrap`] opens (creating if necessary) the SQLite
@@ -9,6 +9,8 @@
 //! outstanding migrations from [`MIGRATIONS`] each inside its own transaction,
 //! records each applied version in `schema_migrations`, and runs
 //! `PRAGMA integrity_check` before handing back the connection.
+
+pub mod repositories;
 
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
@@ -37,13 +39,50 @@ struct Migration {
     sql: &'static str,
 }
 
-/// All migrations, in ascending version order. Phase 1 (§135) ships only
-/// `0001_init.sql`, which creates the `schema_migrations` bookkeeping table
-/// itself; the full domain schema (§104) is Phase 2 (§136) work.
-const MIGRATIONS: &[Migration] = &[Migration {
-    version: 1,
-    sql: include_str!("../../../migrations/0001_init.sql"),
-}];
+/// All migrations, in ascending version order. `0001_init.sql` (Phase 1, §135)
+/// creates the `schema_migrations` bookkeeping table itself. `0002`-`0009` are
+/// reserved one-per-entity for Phase 2's (§136) core data layer — each starts as a
+/// harmless placeholder (see `migrations/README.md` for the numbering convention)
+/// and is filled in by its own entity work unit, which edits only the content of
+/// its already-registered file here, never this array.
+const MIGRATIONS: &[Migration] = &[
+    Migration {
+        version: 1,
+        sql: include_str!("../../../migrations/0001_init.sql"),
+    },
+    Migration {
+        version: 2,
+        sql: include_str!("../../../migrations/0002_items.sql"),
+    },
+    Migration {
+        version: 3,
+        sql: include_str!("../../../migrations/0003_series.sql"),
+    },
+    Migration {
+        version: 4,
+        sql: include_str!("../../../migrations/0004_chapters.sql"),
+    },
+    Migration {
+        version: 5,
+        sql: include_str!("../../../migrations/0005_creators.sql"),
+    },
+    Migration {
+        version: 6,
+        sql: include_str!("../../../migrations/0006_tags.sql"),
+    },
+    Migration {
+        version: 7,
+        sql: include_str!("../../../migrations/0007_collections.sql"),
+    },
+    Migration {
+        version: 8,
+        sql: include_str!("../../../migrations/0008_history.sql"),
+    },
+    Migration {
+        version: 9,
+        sql: include_str!("../../../migrations/0009_progress.sql"),
+    },
+];
 
 /// The on-disk path of the Kelpie SQLite database: `<XDG data dir>/kelpie.sqlite`
 /// (kelpie.md §121-122). Creates the containing directory if it does not exist.
@@ -150,12 +189,13 @@ mod tests {
             })
             .expect("schema_migrations table should exist");
         assert_eq!(
-            count, 1,
-            "exactly one migration (0001_init) should be recorded"
+            count as usize,
+            MIGRATIONS.len(),
+            "every migration in MIGRATIONS should be recorded"
         );
 
         let applied = applied_migration_count(&conn).expect("count applied migrations");
-        assert_eq!(applied, 1);
+        assert_eq!(applied as usize, MIGRATIONS.len());
     }
 
     #[test]
@@ -178,21 +218,28 @@ mod tests {
     fn reopening_is_idempotent() {
         let (_dir, path) = temp_db_path("idempotent.sqlite");
 
-        // First open applies the migration.
+        // First open applies every migration.
         {
             let conn = open_at(&path).expect("first bootstrap should succeed");
-            assert_eq!(applied_migration_count(&conn).unwrap(), 1);
+            assert_eq!(
+                applied_migration_count(&conn).unwrap() as usize,
+                MIGRATIONS.len()
+            );
         }
 
         // Reopening must not re-apply (and must not error on) an already-applied
-        // migration, and the row count must stay exactly one.
+        // migration, and the row count must stay exactly the same.
         let conn = open_at(&path).expect("second bootstrap should succeed");
         let count: i64 = conn
             .query_row("SELECT COUNT(*) FROM schema_migrations", [], |row| {
                 row.get(0)
             })
             .unwrap();
-        assert_eq!(count, 1, "migration must not be applied twice");
+        assert_eq!(
+            count as usize,
+            MIGRATIONS.len(),
+            "migrations must not be applied twice"
+        );
     }
 
     #[test]

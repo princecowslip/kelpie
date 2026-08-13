@@ -2,7 +2,7 @@
 
 > This document is derived from kelpie.md v4.0 (Registry snapshot: August 2026). Kelpie is pre-implementation — this describes intended/aspirational architecture, not built or verified behavior.
 
-This roadmap reflects the phase sequencing and scope gates defined in kelpie.md §134–155. No phase below has been started; nothing described here is built or verified behavior. Phase order matters — it is deliberately structured so that architectural risk (data model, provider platform, feed/search) is resolved before the provider count grows.
+This roadmap reflects the phase sequencing and scope gates defined in kelpie.md §134–155. Phase 1 (Desktop Foundation) is complete and Phase 2 (Core Data Layer) is in progress; phases 3 onward are not started, and nothing described here beyond what's landed is built or verified behavior. Phase order matters — it is deliberately structured so that architectural risk (data model, provider platform, feed/search) is resolved before the provider count grows.
 
 ## Implementation phases
 

@@ -6,9 +6,9 @@ Remote sources flow through sandboxed provider adapters into a normalized media 
 
 ## Status
 
-**This repository is pre-implementation. No application code exists yet.**
+**Implementation is underway, early.** Phase 1 (§135, desktop foundation — Tauri/React shell, SQLite bootstrap, CI, Linux packaging) is complete; Phase 2 (§136, Core Data Layer) is in progress. See [`docs/ROADMAP.md`](./docs/ROADMAP.md) for the full phase sequencing and current status. Most of the application — providers, feed, search, viewers, browser fallback, and nearly everything else described below — remains unbuilt.
 
-[`kelpie.md`](./kelpie.md) is the complete v4.0 Product/UX/Architecture/Provider-Registry/Implementation specification and is the source of truth for the project. [`docs/`](./docs) is a documentation set derived from that spec, organized into the structure the spec itself prescribes (see [`kelpie.md` §132](./kelpie.md)). Everything described in either location — architecture, APIs, providers, phases — is intended/aspirational, not built or verified behavior.
+[`kelpie.md`](./kelpie.md) is the complete v4.0 Product/UX/Architecture/Provider-Registry/Implementation specification and is the source of truth for the project. [`docs/`](./docs) is a documentation set derived from that spec, organized into the structure the spec itself prescribes (see [`kelpie.md` §132](./kelpie.md)). Everything described in either location beyond what's actually landed — architecture, APIs, providers, later phases — is intended/aspirational, not built or verified behavior.
 
 ## Where to start
 

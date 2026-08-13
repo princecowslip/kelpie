@@ -1,0 +1,8 @@
+-- Migration 0006: tags
+--
+-- Reserved for the Tag Phase 2 (kelpie.md §136, §89-90 Tag Normalization) work unit:
+-- `tags` and `item_tags` tables (kelpie.md §104 Database Domains: Attribution &
+-- tagging). Every migration is numbered, immutable once merged, transactional, and
+-- tested (§106) — this placeholder is a valid empty batch until that unit fills it
+-- in as part of landing its own PR; it must never be renumbered or reused for
+-- another entity.
