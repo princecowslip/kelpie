@@ -48,12 +48,12 @@ pub fn init() -> io::Result<PathBuf> {
         .with_ansi(false)
         .with_target(true);
 
-    let stderr_active =
-        cfg!(debug_assertions) || std::env::var_os("KELPIE_LOG_STDERR").is_some();
+    let stderr_active = cfg!(debug_assertions) || std::env::var_os("KELPIE_LOG_STDERR").is_some();
 
     // Built once per call so `RUST_LOG` (or the `info` default) applies identically
     // to both layers.
-    let env_filter = || EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info"));
+    let env_filter =
+        || EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("info"));
 
     let subscriber = tracing_subscriber::registry()
         .with(env_filter())

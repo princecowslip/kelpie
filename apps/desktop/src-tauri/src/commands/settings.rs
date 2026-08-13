@@ -46,8 +46,8 @@ pub fn get_settings() -> Settings {
 #[tauri::command]
 pub fn set_settings(settings: Settings) -> Result<(), String> {
     let path = settings_path()?;
-    let contents =
-        toml::to_string_pretty(&settings).map_err(|err| format!("failed to serialize settings: {err}"))?;
+    let contents = toml::to_string_pretty(&settings)
+        .map_err(|err| format!("failed to serialize settings: {err}"))?;
     fs::write(&path, contents).map_err(|err| format!("failed to write {path:?}: {err}"))
 }
 

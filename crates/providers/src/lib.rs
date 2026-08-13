@@ -84,49 +84,199 @@ struct Entry {
 }
 
 const VIDEO: &[Entry] = &[
-    Entry { uid_suffix: "video-0001", title: "Lorem Ipsum Dolor Sit Amet Video", provider_label: "Fake Provider A", has_thumbnail: true, description: Some("Placeholder synopsis text for a synthetic sample video.") },
-    Entry { uid_suffix: "video-0002", title: "Placeholder Video Sample One", provider_label: "Fake Provider B", has_thumbnail: true, description: None },
-    Entry { uid_suffix: "video-0003", title: "Synthetic Test Clip Alpha", provider_label: "Fake Provider A", has_thumbnail: false, description: Some("Another placeholder description, generated for pipeline testing.") },
-    Entry { uid_suffix: "video-0004", title: "Example Video Title Beta", provider_label: "Fake Provider C", has_thumbnail: true, description: None },
+    Entry {
+        uid_suffix: "video-0001",
+        title: "Lorem Ipsum Dolor Sit Amet Video",
+        provider_label: "Fake Provider A",
+        has_thumbnail: true,
+        description: Some("Placeholder synopsis text for a synthetic sample video."),
+    },
+    Entry {
+        uid_suffix: "video-0002",
+        title: "Placeholder Video Sample One",
+        provider_label: "Fake Provider B",
+        has_thumbnail: true,
+        description: None,
+    },
+    Entry {
+        uid_suffix: "video-0003",
+        title: "Synthetic Test Clip Alpha",
+        provider_label: "Fake Provider A",
+        has_thumbnail: false,
+        description: Some("Another placeholder description, generated for pipeline testing."),
+    },
+    Entry {
+        uid_suffix: "video-0004",
+        title: "Example Video Title Beta",
+        provider_label: "Fake Provider C",
+        has_thumbnail: true,
+        description: None,
+    },
 ];
 
 const IMAGE: &[Entry] = &[
-    Entry { uid_suffix: "image-0001", title: "Placeholder Image Set One", provider_label: "Fake Provider B", has_thumbnail: true, description: None },
-    Entry { uid_suffix: "image-0002", title: "Lorem Ipsum Gallery Sample", provider_label: "Fake Provider A", has_thumbnail: true, description: Some("Placeholder gallery description.") },
-    Entry { uid_suffix: "image-0003", title: "Synthetic Photo Placeholder", provider_label: "Fake Provider C", has_thumbnail: false, description: None },
-    Entry { uid_suffix: "image-0004", title: "Example Image Collection Two", provider_label: "Fake Provider B", has_thumbnail: true, description: None },
+    Entry {
+        uid_suffix: "image-0001",
+        title: "Placeholder Image Set One",
+        provider_label: "Fake Provider B",
+        has_thumbnail: true,
+        description: None,
+    },
+    Entry {
+        uid_suffix: "image-0002",
+        title: "Lorem Ipsum Gallery Sample",
+        provider_label: "Fake Provider A",
+        has_thumbnail: true,
+        description: Some("Placeholder gallery description."),
+    },
+    Entry {
+        uid_suffix: "image-0003",
+        title: "Synthetic Photo Placeholder",
+        provider_label: "Fake Provider C",
+        has_thumbnail: false,
+        description: None,
+    },
+    Entry {
+        uid_suffix: "image-0004",
+        title: "Example Image Collection Two",
+        provider_label: "Fake Provider B",
+        has_thumbnail: true,
+        description: None,
+    },
 ];
 
 const GIF: &[Entry] = &[
-    Entry { uid_suffix: "gif-0001", title: "Looping Placeholder Gif One", provider_label: "Fake Provider A", has_thumbnail: true, description: None },
-    Entry { uid_suffix: "gif-0002", title: "Synthetic Animated Sample", provider_label: "Fake Provider C", has_thumbnail: true, description: Some("Placeholder animation description.") },
-    Entry { uid_suffix: "gif-0003", title: "Example Gif Placeholder Two", provider_label: "Fake Provider B", has_thumbnail: false, description: None },
-    Entry { uid_suffix: "gif-0004", title: "Lorem Ipsum Animation Sample", provider_label: "Fake Provider A", has_thumbnail: true, description: None },
+    Entry {
+        uid_suffix: "gif-0001",
+        title: "Looping Placeholder Gif One",
+        provider_label: "Fake Provider A",
+        has_thumbnail: true,
+        description: None,
+    },
+    Entry {
+        uid_suffix: "gif-0002",
+        title: "Synthetic Animated Sample",
+        provider_label: "Fake Provider C",
+        has_thumbnail: true,
+        description: Some("Placeholder animation description."),
+    },
+    Entry {
+        uid_suffix: "gif-0003",
+        title: "Example Gif Placeholder Two",
+        provider_label: "Fake Provider B",
+        has_thumbnail: false,
+        description: None,
+    },
+    Entry {
+        uid_suffix: "gif-0004",
+        title: "Lorem Ipsum Animation Sample",
+        provider_label: "Fake Provider A",
+        has_thumbnail: true,
+        description: None,
+    },
 ];
 
 const MANGA: &[Entry] = &[
-    Entry { uid_suffix: "manga-0001", title: "Placeholder Manga Chapter One", provider_label: "Fake Provider C", has_thumbnail: true, description: Some("Placeholder chapter summary.") },
-    Entry { uid_suffix: "manga-0002", title: "Synthetic Manga Sample Alpha", provider_label: "Fake Provider A", has_thumbnail: true, description: None },
-    Entry { uid_suffix: "manga-0003", title: "Example Manga Volume Two", provider_label: "Fake Provider B", has_thumbnail: false, description: None },
-    Entry { uid_suffix: "manga-0004", title: "Lorem Ipsum Manga Placeholder", provider_label: "Fake Provider C", has_thumbnail: true, description: None },
+    Entry {
+        uid_suffix: "manga-0001",
+        title: "Placeholder Manga Chapter One",
+        provider_label: "Fake Provider C",
+        has_thumbnail: true,
+        description: Some("Placeholder chapter summary."),
+    },
+    Entry {
+        uid_suffix: "manga-0002",
+        title: "Synthetic Manga Sample Alpha",
+        provider_label: "Fake Provider A",
+        has_thumbnail: true,
+        description: None,
+    },
+    Entry {
+        uid_suffix: "manga-0003",
+        title: "Example Manga Volume Two",
+        provider_label: "Fake Provider B",
+        has_thumbnail: false,
+        description: None,
+    },
+    Entry {
+        uid_suffix: "manga-0004",
+        title: "Lorem Ipsum Manga Placeholder",
+        provider_label: "Fake Provider C",
+        has_thumbnail: true,
+        description: None,
+    },
 ];
 
 const COMIC: &[Entry] = &[
-    Entry { uid_suffix: "comic-0001", title: "Placeholder Comic Issue One", provider_label: "Fake Provider A", has_thumbnail: true, description: None },
-    Entry { uid_suffix: "comic-0002", title: "Synthetic Comic Sample Alpha", provider_label: "Fake Provider B", has_thumbnail: false, description: Some("Placeholder issue blurb.") },
-    Entry { uid_suffix: "comic-0003", title: "Example Comic Placeholder Two", provider_label: "Fake Provider C", has_thumbnail: true, description: None },
+    Entry {
+        uid_suffix: "comic-0001",
+        title: "Placeholder Comic Issue One",
+        provider_label: "Fake Provider A",
+        has_thumbnail: true,
+        description: None,
+    },
+    Entry {
+        uid_suffix: "comic-0002",
+        title: "Synthetic Comic Sample Alpha",
+        provider_label: "Fake Provider B",
+        has_thumbnail: false,
+        description: Some("Placeholder issue blurb."),
+    },
+    Entry {
+        uid_suffix: "comic-0003",
+        title: "Example Comic Placeholder Two",
+        provider_label: "Fake Provider C",
+        has_thumbnail: true,
+        description: None,
+    },
 ];
 
 const LITERATURE: &[Entry] = &[
-    Entry { uid_suffix: "literature-0001", title: "Placeholder Story Chapter One", provider_label: "Fake Provider B", has_thumbnail: false, description: Some("Placeholder chapter excerpt text.") },
-    Entry { uid_suffix: "literature-0002", title: "Synthetic Literature Sample", provider_label: "Fake Provider A", has_thumbnail: false, description: None },
-    Entry { uid_suffix: "literature-0003", title: "Example Text Placeholder Two", provider_label: "Fake Provider C", has_thumbnail: false, description: None },
+    Entry {
+        uid_suffix: "literature-0001",
+        title: "Placeholder Story Chapter One",
+        provider_label: "Fake Provider B",
+        has_thumbnail: false,
+        description: Some("Placeholder chapter excerpt text."),
+    },
+    Entry {
+        uid_suffix: "literature-0002",
+        title: "Synthetic Literature Sample",
+        provider_label: "Fake Provider A",
+        has_thumbnail: false,
+        description: None,
+    },
+    Entry {
+        uid_suffix: "literature-0003",
+        title: "Example Text Placeholder Two",
+        provider_label: "Fake Provider C",
+        has_thumbnail: false,
+        description: None,
+    },
 ];
 
 const AUDIO: &[Entry] = &[
-    Entry { uid_suffix: "audio-0001", title: "Placeholder Audio Track One", provider_label: "Fake Provider C", has_thumbnail: false, description: None },
-    Entry { uid_suffix: "audio-0002", title: "Synthetic Audio Sample Alpha", provider_label: "Fake Provider B", has_thumbnail: true, description: Some("Placeholder track description.") },
-    Entry { uid_suffix: "audio-0003", title: "Example Audio Placeholder Two", provider_label: "Fake Provider A", has_thumbnail: false, description: None },
+    Entry {
+        uid_suffix: "audio-0001",
+        title: "Placeholder Audio Track One",
+        provider_label: "Fake Provider C",
+        has_thumbnail: false,
+        description: None,
+    },
+    Entry {
+        uid_suffix: "audio-0002",
+        title: "Synthetic Audio Sample Alpha",
+        provider_label: "Fake Provider B",
+        has_thumbnail: true,
+        description: Some("Placeholder track description."),
+    },
+    Entry {
+        uid_suffix: "audio-0003",
+        title: "Example Audio Placeholder Two",
+        provider_label: "Fake Provider A",
+        has_thumbnail: false,
+        description: None,
+    },
 ];
 
 fn build(kind: MediaKind, entries: &[Entry]) -> Vec<FakeMediaItem> {
@@ -136,7 +286,9 @@ fn build(kind: MediaKind, entries: &[Entry]) -> Vec<FakeMediaItem> {
             uid: format!("fake:{}", e.uid_suffix),
             title: e.title.to_string(),
             kind,
-            thumbnail_url: e.has_thumbnail.then(|| placeholder_thumbnail(kind.as_str())),
+            thumbnail_url: e
+                .has_thumbnail
+                .then(|| placeholder_thumbnail(kind.as_str())),
             provider_label: e.provider_label.to_string(),
             description: e.description.map(str::to_string),
         })
@@ -185,7 +337,10 @@ mod tests {
                 "provider_label must not be empty"
             );
             if let Some(url) = &item.thumbnail_url {
-                assert!(!url.trim().is_empty(), "thumbnail_url, if set, must not be empty");
+                assert!(
+                    !url.trim().is_empty(),
+                    "thumbnail_url, if set, must not be empty"
+                );
             }
         }
     }

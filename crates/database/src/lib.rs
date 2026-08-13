@@ -149,7 +149,10 @@ mod tests {
                 row.get(0)
             })
             .expect("schema_migrations table should exist");
-        assert_eq!(count, 1, "exactly one migration (0001_init) should be recorded");
+        assert_eq!(
+            count, 1,
+            "exactly one migration (0001_init) should be recorded"
+        );
 
         let applied = applied_migration_count(&conn).expect("count applied migrations");
         assert_eq!(applied, 1);

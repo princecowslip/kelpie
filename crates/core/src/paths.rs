@@ -30,9 +30,7 @@ pub fn data_dir() -> io::Result<PathBuf> {
 
 /// `$XDG_CACHE_HOME/kelpie` — thumbnails, feed cache, other regenerable data.
 pub fn cache_dir() -> io::Result<PathBuf> {
-    let dir = project_dirs()
-        .cache_dir()
-        .to_path_buf();
+    let dir = project_dirs().cache_dir().to_path_buf();
     ensure_dir(dir)
 }
 
