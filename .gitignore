@@ -28,3 +28,6 @@ logs/
 .idea/
 .DS_Store
 *.swp
+
+# Claude Code runtime state (background-agent worktrees, etc.)
+.claude/
