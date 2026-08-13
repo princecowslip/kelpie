@@ -1,12 +1,20 @@
 //! kelpie-providers: provider execution runtime (kelpie.md §23-33 Provider Model).
-//! Placeholder crate — the sandboxed provider platform lands in Phase 3 (§137).
-//! Phase 1 (§135) uses fake providers only; no real network/provider code.
+//! Phase 3 (§137) is landing the provider platform here, item by item:
+//! [`manifest`] (manifest parser) is the first. The remaining seven items —
+//! capability system, provider lifecycle, provider permissions, scoped HTTP,
+//! provider storage, fixture runtime, diagnostics — are not yet implemented.
+//! No real network/provider code exists yet (§137: "No large real-source
+//! effort yet").
 //!
-//! This module provides a deterministic, hardcoded fake media feed used to
-//! exercise the Tauri command / frontend pipeline end-to-end before any real
-//! provider integration exists. All titles, provider labels, and thumbnail
-//! URLs below are synthetic placeholders (see repository CLAUDE.md "Content
-//! boundaries") — no real provider, site, or piece of media is referenced.
+//! The rest of this module (below) is Phase 1's (§135) fake-provider feed,
+//! predating Phase 3 and unrelated to it — a deterministic, hardcoded fake
+//! media feed used to exercise the Tauri command / frontend pipeline
+//! end-to-end before any real provider integration exists. All titles,
+//! provider labels, and thumbnail URLs below are synthetic placeholders (see
+//! repository CLAUDE.md "Content boundaries") — no real provider, site, or
+//! piece of media is referenced.
+
+pub mod manifest;
 
 use serde::{Deserialize, Serialize};
 
