@@ -1,0 +1,6 @@
+[package]
+name = "kelpie-search"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]

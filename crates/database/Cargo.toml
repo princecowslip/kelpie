@@ -1,0 +1,8 @@
+[package]
+name = "kelpie-database"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+kelpie-core = { path = "../core" }
+rusqlite = { workspace = true }
