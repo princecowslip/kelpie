@@ -11,6 +11,10 @@ kelpie.md §123 does not treat Ubuntu as a distribution distinct from Debian: it
 
 No further detail — no build tooling, dependency list, repository plan, or Ubuntu-specific packaging steps (e.g. a PPA) — is given in §123.
 
+## Testing / validation target
+
+Packaging *format* is identical to Debian's (see below), but kelpie.md draws one genuine distinction between the two distributions: validation target. §148 Phase 14 — Beta Hardening lists testing against "Ubuntu LTS" as a distinct entry from "Debian stable" — i.e. Ubuntu builds are expected to be validated against Ubuntu's LTS release cadence specifically, not against Debian's stable channel, even though both consume the same `.deb`/AppImage artifacts. §151 MVP Acceptance Criteria separately lists "Debian/Ubuntu/Arch validation" as a gate item for the 1.0 release (kelpie.md §152, Version 1.0 Gate, restates this as part of the 1.0 bar). Beyond naming "Ubuntu LTS" as the tracked channel, kelpie.md gives no further Ubuntu-specific detail (no minimum LTS version, no PPA policy).
+
 ## Relationship to Debian
 
 This document and [`DEBIAN.md`](./DEBIAN.md) are necessarily near-duplicates: the source spec groups Ubuntu with Debian rather than specifying it separately. Packaging is identical between the two unless and until a maintainer deliberately differentiates them. Do not read anything Ubuntu-specific into this document beyond what §123 states for the shared "Debian/Ubuntu" grouping.

@@ -116,6 +116,20 @@ Provider completion requires:
 
 These checklists are the acceptance bar this spec defines for contributed work — an application-feature contribution should satisfy §153 in full, and a provider contribution should satisfy §154 in full, including the registry review step for providers.
 
+## Architecture decisions
+
+kelpie.md §133 (Architecture Decision Records) is the one piece of genuine "how a nontrivial decision gets made" process the spec defines, and it belongs in a contributing guide more than anywhere else in this tree. It calls for ADRs on irreversible decisions, in a fixed format:
+
+```
+Context
+Decision
+Alternatives
+Consequences
+Status
+```
+
+and names eight ADR stubs, all of which now exist under [`../adr/`](../adr/): `0001-tauri.md`, `0002-sqlite.md`, `0003-provider-sandbox.md`, `0004-no-remote-native-ipc.md`, `0005-browser-fallback.md`, `0006-separate-provider-registry.md`, `0007-structural-media-taxonomy.md`, `0008-local-first-history.md`. Per `CLAUDE.md`, every ADR in this repository stays at `Status: Proposed` until an actual implementation lands that depends on the decision — a contribution that touches one of these areas should update the relevant ADR's Consequences/Status rather than silently diverging from a decision it documents, and a genuinely new irreversible decision should get a new ADR following the same format.
+
 ## Related documents
 
 - [`../providers/SDK.md`](../providers/SDK.md), [`../providers/MANIFEST.md`](../providers/MANIFEST.md) — provider SDK and manifest schema referenced by the developer tooling above.
